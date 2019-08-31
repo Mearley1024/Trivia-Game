@@ -1,14 +1,5 @@
-$('#start-game').on('click',function(){
-    game.start();
-})
-$('#subwrapper h2').remove();
-
-$(document).on('click','#end',function(){
-    game.done();
-})
-
 var questions = [{
-    question: "What color are aircraft black boxes?",
+    question: "What color are aircraft boxes black boxes?",
     answer: ["black", "orange", "yellow"],
 correctAnswer: "orange"
 }, {
@@ -37,10 +28,29 @@ correctAnswer: "nine"
 correctAnswer: "Angel Falls, Venezuela"
 }];
 
+$('#start-game').on('click',function(){
+    console.log("start")
+
+    $('#start-game').remove();
+
+    for(var i=0;i<questions.length;i++){
+        $('#subwrapper').append('<h2>'+questions[i].question+'</h2>');
+
+    for(var j=0;j<questions[i].answer.length;j++){
+            $('#subwrapper').append("<input type='radio' name='questions-"+i+"' value='"+questions[i].answer[j]+"'>"+questions[i].answer[j])
+        }
+    }
+    game.start();
+})
+
+$(document).on('click','#end',function(){
+    game.done();
+})
+
 var game = { 
     correct: 0,
     incorrect: 0,
-    counter: 90,
+    counter: 20,
     countdown: function(){
         game.counter--;
         $('#counter').html(game.counter);
@@ -49,20 +59,16 @@ var game = {
             game.done();
         }
     },
-start: function() {
+start: function(){
     timer = setInterval(game.countdown,1000);
-    $('#subwrapper').prepend('<h2>Time Remaining: <span id="counter">90</span> seconds</h2>')
-    
-    //$('#start').remove();
-
+    $('#subwrapper').prepend('<h2>Time Remaining: <span id="counter">120</span> seconds</h2>')
+    $('#start').remove();
     for(var i=0;i<questions.length;i++){
         $('#subwrapper').append('<h2>'+questions[i].question+'</h2>');
         for(var j=0;j<questions[i].answer.length;j++) {
-             $('#subwrapper').append("<input type='radio' name='question-"+i+"' value='"+questions[i].answer[j]+"'>"+questions[i].answer[j])      }
-        }  
-
-     //$('#subwrapper').append('<br><button id="end">Finish</button>')
-
+             $('#subwrapper').append("<input type='radio' name='questions-"+i+"' value='"+questions[i].answer[j]+"'>"+questions[i].answer[j])      }
+        }     
+             $('#subwrapper').append('<button id="end>)Finish</button>')
      },
 done: function(){    
     $.each($('input[name="question-0]":checked'),function(){
@@ -116,13 +122,14 @@ done: function(){
     });
 
     this.result();
-    },
+},
 
-result: function() {
+result: function(){
     clearInterval(timer);
-    //$('#subwrapper h2').remove();   
-   $('#subwrapper').html("<h2>Time's up!</h2>");
-   $('#subwrapper').append("<h3>correct answer: "+this.correct+"</h3>");
+    $('#subwrapper h2').remove();
+
+    $('#subwrapper').html("<h2>Time's up!</h2>");
+    $('#subwrapper').append("<h3>correct answer: "+this.correct+"</h3>");
     $('#subwrapper').append("<h3>incoorrect answer: "+this.incorrect+"</h3>");
     $('#subwrapper').append("<h3>Unanswered: "+(questions.length-(this.incorrect+this.correct))+"</h3>");
     }

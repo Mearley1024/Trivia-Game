@@ -2,7 +2,7 @@
 
 ## Overview
 
- Answer seven multiple choice questions before time runs out.
+ Answer seven random trivia questions before time runs out.
 
 1. There are seven multiple choice questions.
 2. Only one correct answer per question.
